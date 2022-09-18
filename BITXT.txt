@@ -1,0 +1,84 @@
+move all file from one folder to other folder
+1>first in control flow 
+take Foreach Loop Container->double Click -> Collection ->secect (Foreach File Enumerator)
+give source folder configuration name(E:\sem_9\BI\kruti_assignment\Level-1)
+into variable mappings tab => create variable 
+  variable    index
+  User:Variable 0
+2> take file system task into foreach loop container
+   general tab
+     isDestinationPathVariable  => False
+     DestinationConnection => create destination connection
+     select Operation
+     IsSourcePathVariable => true
+     SourceVariable => User:Variable
+     done
+3> right click on flat style task -> properties -> DelayValidation =>True
+
+
+run 
+
+
+====================================================
+LEVEL-2
+Points Covered:  Execute SQL Command, Look up, Derived Column, Multicast
+
+Task 1 : Import data from .csv/.txt/excel/xml file to SQL table,
+•	Sync the data into the table. 
+◦	If PRIMARY KEY already exists in the table then UPDATE the data in the table.
+◦	If new PRIMARY KEY is found in the file which does not exist in the table, INSERT the data into the table.
+◦	And if an PRIMARY KEY in Table does not exist in the file, DELETE the data from the table.
+•	Calculate Age based on DateOfBirth
+•	Address data should be imported in “Address” table.
+
+      
+
+1.take data flow task -> doble click
+
+2.take 
+    . flat file source
+    .OLEDB Source
+
+*Flat File Source Flow
+    .take data conversion and convert data accordingly
+      and give colum alias as csv ex:name(csv) 
+     .take multicast and derived column and dataconvrsion
+      one point of multicast goes into dataconversion(1) and second into derived column
+    Derived column : calculate age 
+    (
+      derived column name : age
+      derived column : add as new column
+       Expression :DATEDIFF("yy",[DateOFBirth(csv)],GETDATE())
+        Data type : four-byte signed integer
+     ) 
+
+    from data conversion(1)
+    take OLE DB Destination and add data of address field do not check other fields
+
+   continue to derived colum :
+     take one sort -> by id -> input from derived column
+     take another sort -> by id -> input from oledb data source
+    take Merge join -> input from sort and sort 1
+     in mearge join select rows which we need and (relation sort ID(csv) mapping Sort1 ID)
+ *take conditional split
+      take input from merge join
+       1>insert:ISNULL(ID) && !ISNULL([ID(csv)])
+       2> delete:ISNULL([ID(csv)]) && !ISNULL(ID)
+       3>update:Name != [Name(csv)] || Gender != [Gender(csv)]
+
+take one OLEDB Destination -> for insert
+   take two OLEDB Command -> for update and delte
+   in colum mapping select column required for doing opertaion
+    into component properties write commnd
+    delete:delete from LEVEL2_Name where ID=?
+    update:update LEVEL2_Name set Name=?,Gender=?,DateOfBirth=?,InvestAmount=? where ID=?
+   
+
+   
+
+
+
+
+
+
+

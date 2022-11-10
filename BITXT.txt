@@ -79,6 +79,28 @@ take one OLEDB Destination -> for insert
     script language : micro visial c# 2019
     read write variable :   User=Employee
    
+   Ex : drive Moving file
+   scripttask-> User::Employee EditScript code:>
+   public void Main()
+		{
+            // TODO: Add your code here
+            ArrayList EmpNames = new ArrayList();
+            EmpNames.Add("Meera");
+            EmpNames.Add("Heena");
+            EmpNames.Add("Priya");
+            EmpNames.Add("Yesha");
+
+            Dts.Variables["User::Employee"].Value = EmpNames;
+
+            Dts.TaskResult = (int)ScriptResults.Success;
+		}
+   foreach loop -> in that script task
+   second script task code -> public void Main()
+		{
+            // TODO: Add your code here
+            MessageBox.Show("hello ..."+Dts.Variables["User::Employee"].Value.ToString());
+			Dts.TaskResult = (int)ScriptResults.Success;
+		}
 
    
 

@@ -72,6 +72,12 @@ take one OLEDB Destination -> for insert
     into component properties write commnd
     delete:delete from LEVEL2_Name where ID=?
     update:update LEVEL2_Name set Name=?,Gender=?,DateOfBirth=?,InvestAmount=? where ID=?
+    
+    
+    =======================script task
+    select script task from toolbob
+    script language : micro visial c# 2019
+    read write variable :   User=Employee
    
 
    
